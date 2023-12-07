@@ -50,4 +50,19 @@ var _ = Describe("ParkingLot", func() {
 		Expect(parking_lot.IsParked(vehicle2)).To(Equal(false))
 	})
 
+	It("should not be able to unpark the vehicle which is not parked", func() {
+		parking_lot := NewParkingLot(1)
+		not_parked_vehicle := NewVehicle()
+		err := parking_lot.UnPark(not_parked_vehicle)
+		Expect(err).To(Equal(errors.New("Vehicle is not parked")))
+	})
+
+	It("should be able to unpark the parked vehicle", func() {
+		parking_lot := NewParkingLot(1)
+		vehicle := NewVehicle()
+		parking_lot.Park(vehicle)
+		err := parking_lot.UnPark(vehicle)
+		Expect(err).To(BeNil())
+	})
+
 })
