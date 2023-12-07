@@ -25,6 +25,15 @@ var _ = Describe("ParkingLot", func() {
 		Expect(parking_lot.IsLotAvailable()).To(Equal(false))
 	})
 
+	It("should not be able to park once parking lot is full", func() {
+		parking_lot := NewParkingLot(1, &owner)
+		vehicle := NewVehicle()
+		vehicle2 := NewVehicle()
+		parking_lot.Park(vehicle)
+		err := parking_lot.Park(vehicle2)
+		Expect(err).To(Equal(errors.New("Parking lot is full")))
+	})
+
 	It("already parked vehicle should not be able to park again", func() {
 		parking_lot := NewParkingLot(2, &owner)
 		vehicle := NewVehicle()

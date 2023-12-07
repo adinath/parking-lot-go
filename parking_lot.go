@@ -51,7 +51,7 @@ func (parkingLot *ParkingLot) Park(vehicle Vehicle) error {
 			parkingLot.notifyParkingFullToAllObservers()
 		}
 	} else {
-		return errors.New("Parking lot of full")
+		return errors.New("Parking lot is full")
 	}
 	return nil
 }
