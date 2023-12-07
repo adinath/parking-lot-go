@@ -94,4 +94,16 @@ var _ = Describe("ParkingLot", func() {
 		Expect(owner.IsParkingFull()).To(Equal(false))
 	})
 
+	It("should be able to register for parking lot notifications", func() {
+		owner := NewOwner()
+		owner2 := NewOwner()
+		parking_lot := NewParkingLot(1, &owner)
+		parking_lot.register(&owner2)
+		vehicle := NewVehicle()
+		parking_lot.Park(vehicle)
+		Expect(owner2.IsParkingFull()).To(Equal(true))
+		parking_lot.UnPark(vehicle)
+		Expect(owner2.IsParkingFull()).To(Equal(false))
+	})
+
 })

@@ -77,3 +77,7 @@ func (parkingLot *ParkingLot) removeVehicle(vehicle Vehicle) {
 	parked_index := parkingLot.indexOf(vehicle)
 	parkingLot.parkedVehicles = append(parkingLot.parkedVehicles[:parked_index], parkingLot.parkedVehicles[parked_index+1:]...)
 }
+
+func (parkingLot *ParkingLot) register(observer ParkingLotObserver) {
+	parkingLot.observers = append(parkingLot.observers, observer)
+}
