@@ -18,8 +18,8 @@ func (parkingLot *ParkingLot) IsLotAvailable() bool {
 }
 
 func (parkingLot *ParkingLot) IsParked(vehicle Vehicle) bool {
-	for _, v := range parkingLot.parkedVehicles {
-		if v == vehicle {
+	for _, parkedVehicle := range parkingLot.parkedVehicles {
+		if parkedVehicle == vehicle {
 			return true
 		}
 	}

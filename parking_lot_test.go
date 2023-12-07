@@ -35,9 +35,19 @@ var _ = Describe("ParkingLot", func() {
 	It("can park more than 1 vehicle", func() {
 		parking_lot := NewParkingLot(3)
 		vehicle := NewVehicle()
+		vehicle2 := NewVehicle()
 		parking_lot.Park(vehicle)
-		parking_lot.Park(vehicle)
+		parking_lot.Park(vehicle2)
 		Expect(parking_lot.IsLotAvailable()).To(Equal(true))
+	})
+
+	It("can check if vehicle is parked in parking lot", func() {
+		parking_lot := NewParkingLot(3)
+		vehicle := NewVehicle()
+		vehicle2 := NewVehicle()
+		parking_lot.Park(vehicle)
+		Expect(parking_lot.IsParked(vehicle)).To(Equal(true))
+		Expect(parking_lot.IsParked(vehicle2)).To(Equal(false))
 	})
 
 })

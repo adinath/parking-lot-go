@@ -3,6 +3,7 @@ module tw-bootcamp-go-tdd
 go 1.20
 
 require (
+	github.com/google/uuid v1.4.0
 	github.com/onsi/ginkgo/v2 v2.13.2
 	github.com/onsi/gomega v1.30.0
 )
