@@ -32,4 +32,12 @@ var _ = Describe("ParkingLot", func() {
 		Expect(err).To(Equal(errors.New("Vehicle is already parked")))
 	})
 
+	It("can park more than 1 vehicle", func() {
+		parking_lot := NewParkingLot(3)
+		vehicle := NewVehicle()
+		parking_lot.Park(vehicle)
+		parking_lot.Park(vehicle)
+		Expect(parking_lot.IsLotAvailable()).To(Equal(true))
+	})
+
 })
