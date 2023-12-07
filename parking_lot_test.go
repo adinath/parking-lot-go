@@ -10,4 +10,10 @@ var _ = Describe("ParkingLot", func() {
 		parking_lot := NewParkingLot(0)
 		Expect(parking_lot.IsLotAvailable()).To(Equal(false))
 	})
+
+	It("parking lot should be available to park with single capacity parking lot", func() {
+		parking_lot := NewParkingLot(1)
+		Expect(parking_lot.IsLotAvailable()).To(Equal(true))
+	})
+
 })
