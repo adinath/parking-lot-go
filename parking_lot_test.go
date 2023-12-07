@@ -66,7 +66,7 @@ var _ = Describe("ParkingLot", func() {
 		Expect(err).To(BeNil())
 	})
 
-	It("should notify owner when parking lot becomes full", func() {
+	It("should notify observers when parking lot becomes full", func() {
 		owner := NewOwner()
 		parking_lot := NewParkingLot(1, &owner)
 		vehicle := NewVehicle()
@@ -75,7 +75,7 @@ var _ = Describe("ParkingLot", func() {
 		Expect(owner.IsParkingFull()).To(Equal(true))
 	})
 
-	It("should notify owner when parking becomes available", func() {
+	It("should notify observers when parking becomes available", func() {
 		owner := NewOwner()
 		parking_lot := NewParkingLot(1, &owner)
 		vehicle := NewVehicle()

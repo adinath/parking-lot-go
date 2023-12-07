@@ -5,13 +5,14 @@ import "errors"
 type ParkingLot struct {
 	capacity       int
 	parkedVehicles []Vehicle
-	owner          *Owner
+	observers      []ParkingLotObserver
 }
 
 func NewParkingLot(cap int, passed_owner *Owner) ParkingLot {
+	first_observers := []ParkingLotObserver{passed_owner}
 	return ParkingLot{
-		capacity: cap,
-		owner:    passed_owner,
+		capacity:  cap,
+		observers: first_observers,
 	}
 }
 
@@ -47,7 +48,7 @@ func (parkingLot *ParkingLot) Park(vehicle Vehicle) error {
 	if len(parkingLot.parkedVehicles) < parkingLot.capacity {
 		parkingLot.parkedVehicles = append(parkingLot.parkedVehicles, vehicle)
 		if parkingLot.IsFull() {
-			parkingLot.owner.notifyParkingFull()
+			parkingLot.notifyParkingFullToAllObservers()
 		}
 	} else {
 		return errors.New("Parking lot of full")
@@ -55,11 +56,23 @@ func (parkingLot *ParkingLot) Park(vehicle Vehicle) error {
 	return nil
 }
 
+func (parkingLot *ParkingLot) notifyParkingFullToAllObservers() {
+	for _, observer := range parkingLot.observers {
+		observer.NotifyParkingFull()
+	}
+}
+
+func (parkingLot *ParkingLot) notifyParkingAvailableToAllObservers() {
+	for _, observer := range parkingLot.observers {
+		observer.NotifyParkingAvailable()
+	}
+}
+
 func (parkingLot *ParkingLot) UnPark(vehicle Vehicle) error {
 	if parkingLot.IsParked(vehicle) {
 		parked_index := parkingLot.indexOf(vehicle)
 		parkingLot.parkedVehicles = append(parkingLot.parkedVehicles[:parked_index], parkingLot.parkedVehicles[parked_index+1:]...)
-		parkingLot.owner.notifyParkingAvailable()
+		parkingLot.notifyParkingAvailableToAllObservers()
 		return nil
 	} else {
 		return errors.New("Vehicle is not parked")
