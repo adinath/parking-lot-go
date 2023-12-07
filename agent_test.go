@@ -6,7 +6,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Agent", func() {
+var _ = Describe("Attendant", func() {
 	mockObserver := NewOwner()
 	It("agent should not be able to park vehicle in parking lot", func() {
 		parkingLot := NewParkingLot(0, &mockObserver)

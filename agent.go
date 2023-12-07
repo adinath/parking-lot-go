@@ -2,11 +2,11 @@ package parking
 
 import "errors"
 
-type Agent struct {
+type Attendant struct {
 	parkingLot *ParkingLot
 }
 
-func (agent *Agent) Park(vehicle Vehicle) error {
+func (agent *Attendant) Park(vehicle Vehicle) error {
 	if agent.parkingLot.IsLotAvailable() {
 		agent.parkingLot.Park(vehicle)
 		return nil
@@ -15,8 +15,8 @@ func (agent *Agent) Park(vehicle Vehicle) error {
 	}
 }
 
-func NewAgent(parkingLot ParkingLot) Agent {
-	return Agent{
+func NewAgent(parkingLot ParkingLot) Attendant {
+	return Attendant{
 		parkingLot: &parkingLot,
 	}
 }
