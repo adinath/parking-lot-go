@@ -16,4 +16,11 @@ var _ = Describe("ParkingLot", func() {
 		Expect(parking_lot.IsLotAvailable()).To(Equal(true))
 	})
 
+	It("parking lot should not be available to park after parking a vehicle with single capacity parking lot", func() {
+		parking_lot := NewParkingLot(1)
+		vehicle := NewVehicle()
+		parking_lot.Park(vehicle)
+		Expect(parking_lot.IsLotAvailable()).To(Equal(false))
+	})
+
 })
