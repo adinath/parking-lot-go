@@ -1,6 +1,7 @@
 package parking
 
 import (
+	"errors"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
@@ -21,6 +22,14 @@ var _ = Describe("ParkingLot", func() {
 		vehicle := NewVehicle()
 		parking_lot.Park(vehicle)
 		Expect(parking_lot.IsLotAvailable()).To(Equal(false))
+	})
+
+	It("already parked vehicle should not be able to park again", func() {
+		parking_lot := NewParkingLot(2)
+		vehicle := NewVehicle()
+		parking_lot.Park(vehicle)
+		err := parking_lot.Park(vehicle)
+		Expect(err).To(Equal(errors.New("Vehicle is already parked")))
 	})
 
 })
