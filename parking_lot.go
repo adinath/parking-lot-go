@@ -24,12 +24,7 @@ func (parkingLot *ParkingLot) IsFull() bool {
 	return parkingLot.capacity == len(parkingLot.parkedVehicles)
 }
 func (parkingLot *ParkingLot) IsParked(vehicle Vehicle) bool {
-	for _, parkedVehicle := range parkingLot.parkedVehicles {
-		if parkedVehicle == vehicle {
-			return true
-		}
-	}
-	return false
+	return parkingLot.indexOf(vehicle) >= 0
 }
 
 func (parkingLot *ParkingLot) indexOf(vehicle Vehicle) int {
@@ -70,11 +65,15 @@ func (parkingLot *ParkingLot) notifyParkingAvailableToAllObservers() {
 
 func (parkingLot *ParkingLot) UnPark(vehicle Vehicle) error {
 	if parkingLot.IsParked(vehicle) {
-		parked_index := parkingLot.indexOf(vehicle)
-		parkingLot.parkedVehicles = append(parkingLot.parkedVehicles[:parked_index], parkingLot.parkedVehicles[parked_index+1:]...)
+		parkingLot.removeVehicle(vehicle)
 		parkingLot.notifyParkingAvailableToAllObservers()
 		return nil
 	} else {
 		return errors.New("Vehicle is not parked")
 	}
+}
+
+func (parkingLot *ParkingLot) removeVehicle(vehicle Vehicle) {
+	parked_index := parkingLot.indexOf(vehicle)
+	parkingLot.parkedVehicles = append(parkingLot.parkedVehicles[:parked_index], parkingLot.parkedVehicles[parked_index+1:]...)
 }
