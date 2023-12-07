@@ -8,11 +8,11 @@ type ParkingLot struct {
 	observers      []ParkingLotObserver
 }
 
-func NewParkingLot(cap int, passed_owner *Owner) ParkingLot {
-	first_observers := []ParkingLotObserver{passed_owner}
+func NewParkingLot(cap int, passedOwner *Owner) ParkingLot {
+	firstObservers := []ParkingLotObserver{passedOwner}
 	return ParkingLot{
 		capacity:  cap,
-		observers: first_observers,
+		observers: firstObservers,
 	}
 }
 
@@ -74,8 +74,8 @@ func (parkingLot *ParkingLot) UnPark(vehicle Vehicle) error {
 }
 
 func (parkingLot *ParkingLot) removeVehicle(vehicle Vehicle) {
-	parked_index := parkingLot.indexOf(vehicle)
-	parkingLot.parkedVehicles = append(parkingLot.parkedVehicles[:parked_index], parkingLot.parkedVehicles[parked_index+1:]...)
+	parkedIndex := parkingLot.indexOf(vehicle)
+	parkingLot.parkedVehicles = append(parkingLot.parkedVehicles[:parkedIndex], parkingLot.parkedVehicles[parkedIndex+1:]...)
 }
 
 func (parkingLot *ParkingLot) register(observer ParkingLotObserver) {
