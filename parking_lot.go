@@ -40,13 +40,12 @@ func (parkingLot *ParkingLot) Park(vehicle Vehicle) error {
 	if parkingLot.IsParked(vehicle) {
 		return errors.New("Vehicle is already parked")
 	}
-	if len(parkingLot.parkedVehicles) < parkingLot.capacity {
-		parkingLot.parkedVehicles = append(parkingLot.parkedVehicles, vehicle)
-		if parkingLot.IsFull() {
-			parkingLot.notifyParkingFullToAllObservers()
-		}
-	} else {
+	if len(parkingLot.parkedVehicles) == parkingLot.capacity {
 		return errors.New("Parking lot is full")
+	}
+	parkingLot.parkedVehicles = append(parkingLot.parkedVehicles, vehicle)
+	if parkingLot.IsFull() {
+		parkingLot.notifyParkingFullToAllObservers()
 	}
 	return nil
 }

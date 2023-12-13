@@ -16,7 +16,7 @@ func (attendant *Attendant) Park(vehicle Vehicle) error {
 	}
 }
 
-func (attendant Attendant) firstParkingLot() (ParkingLot, error) {
+func (attendant *Attendant) firstParkingLot() (ParkingLot, error) {
 	for _, parkingLot := range attendant.parkingLots {
 		if parkingLot.IsLotAvailable() {
 			return parkingLot, nil
