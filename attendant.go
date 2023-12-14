@@ -3,11 +3,12 @@ package parking
 import "errors"
 
 type Attendant struct {
-	parkingLots []ParkingLot
+	parkingLots        []ParkingLot
+	parkingLotSelector ParkingLotSelector
 }
 
 func (attendant *Attendant) Park(vehicle Vehicle) error {
-	availableParkingLot, err := attendant.firstParkingLot()
+	availableParkingLot, err := attendant.parkingLotSelector.Select(attendant.parkingLots)
 	if err == nil {
 		availableParkingLot.Park(vehicle)
 		return nil
@@ -25,9 +26,21 @@ func (attendant *Attendant) firstParkingLot() (ParkingLot, error) {
 	return ParkingLot{}, errors.New("All parkings are full")
 }
 
-func NewAgent(parkingLot ParkingLot) Attendant {
-	firstParkingLot := []ParkingLot{parkingLot}
+func (attendant *Attendant) UnPark(vehicle Vehicle) error {
+
+	for _, parkingLot := range attendant.parkingLots {
+		if parkingLot.IsParked(vehicle) {
+			parkingLot.UnPark(vehicle)
+			return nil
+		}
+	}
+	return errors.New("Vehicle is not parked")
+}
+
+func NewAgent(parkingLot *ParkingLot, selector ParkingLotSelector) Attendant {
+	firstParkingLot := []ParkingLot{*parkingLot}
 	return Attendant{
-		parkingLots: firstParkingLot,
+		parkingLots:        firstParkingLot,
+		parkingLotSelector: selector,
 	}
 }
